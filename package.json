@@ -1,0 +1,19 @@
+{
+  "name": "tokubot",
+  "version": "1.0.0",
+  "description": "A google chrome extension that displays the optimal move in any game of poker",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tokuda17/TokuBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tokuda17/TokuBot/issues"
+  },
+  "homepage": "https://github.com/Tokuda17/TokuBot#readme"
+}

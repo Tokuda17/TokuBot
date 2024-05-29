@@ -5,7 +5,8 @@
   "description": "A Chrome extension that reads and logs HTML content of a page.",
   "permissions": ["activeTab", "scripting"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "action": {
     "default_popup": "popup.html",
@@ -18,7 +19,9 @@
   "content_scripts": [
     {
       "matches": ["https://www.bovada.lv/static/poker-game/*"],
-      "js": ["bovada.js"]
+      "js": ["bovada.js"],
+      "run_at": "document_idle",
+      "type": "module"
     }
   ],
   "host_permissions": ["<all_urls>"]

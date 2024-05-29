@@ -1,4 +1,5 @@
-var game;
+var board;
+var seats = [];
 
 //function that finds the game html files for bovada
 function init() {
@@ -37,7 +38,17 @@ function initSeats() {
   const players = game.getElementsByClassName("f1phzx2y Desktop landscape");
 
   //initialize each seat and player
-  for (let i = 0; i < players.length; i++) {}
+  for (let i = 0; i < players.length; i++) {
+    var player;
+    var seat;
+
+    if (players[i].getElementsByClassName("feis0ob Desktop")[0]) {
+      var player = new Player(0, 0, false, false);
+      console.log(player);
+    } else {
+      console.log("Active Player + " + i);
+    }
+  }
 }
 
 function main() {
@@ -47,3 +58,12 @@ function main() {
 
 // Run the check every 1 seconds (1000 milliseconds)
 setInterval(main, 10000);
+
+class Player {
+  constructor(bet, stack, isActive, inHand) {
+    this.bet = bet;
+    this.stack = stack;
+    this.isActive = isActive;
+    this.inHand = inHand;
+  }
+}
