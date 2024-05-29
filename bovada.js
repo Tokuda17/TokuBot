@@ -19,15 +19,31 @@ function init() {
     .getElementsByTagName("div")[0]
     .getElementsByTagName("div")[3]
     .getElementsByClassName("f1so0fyt")[0];
-  console.log(game);
+  //console.log(game);
 }
 
-function getStackSize() {}
+//functions that updates the board and potsize
+function getBoard() {}
+
+//function that initializes the seats and players in each seat.
+function initSeats() {
+  //gets position of myplayer
+  const myPlayer = game.getElementsByClassName(
+    "f1phzx2y Desktop landscape myPlayer"
+  )[0];
+  var playerPosition = myPlayer.dataset.qa.slice(-1);
+
+  //gets all seats at the table
+  const players = game.getElementsByClassName("f1phzx2y Desktop landscape");
+
+  //initialize each seat and player
+  for (let i = 0; i < players.length; i++) {}
+}
+
+function main() {
+  init();
+  initSeats();
+}
 
 // Run the check every 1 seconds (1000 milliseconds)
-setInterval(init, 10000);
-setInterval(getStackSize, 10000);
-
-// Initial check when the script is loaded
-getStackSize();
-init();
+setInterval(main, 10000);
