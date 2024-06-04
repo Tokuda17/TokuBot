@@ -1,5 +1,5 @@
 var board;
-var seats = [];
+var seats = new Array(9);
 const playersContainers = new Array(9);
 const players = new Array(9);
 var myPlayer;
@@ -35,27 +35,60 @@ function getBoard() {}
 
 function isInHand() {}
 
+function getBalance(seat) {
+  var balance;
+  if (seat == myPlayer) {
+    balance = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone.fimvvv > div > span"
+    );
+  } else {
+    balance = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
+    );
+    if (!balance) {
+      balance = playersContainers[seat].querySelector(
+        "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.rightPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
+      );
+    }
+    if (!balance) {
+      balance = playersContainers[seat].querySelector(
+        "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
+      );
+    }
+    if (!balance) {
+      balance = playersContainers[seat].querySelector(
+        "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.rightPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
+      );
+    }
+  }
+  if (balance) return balance.innerText;
+}
+
+function getBet(seat) {
+  var bet;
+  bet = playersContainers[seat].querySelector(
+    "div > div:nth-child(2) > div.fhwmucx > div > div"
+  );
+  if (bet) return bet.innerText;
+  else return "0";
+}
+
+function getInHand(seat) {}
+
 function initPlayer(seat) {
   var player = new Player(0, 0, "ACTIVE", "INHAND");
-  // var balance = playersContainers[seat].querySelector(
-  //   "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.leftPlayer.notZone.fimvvv > div > span"
-  // );
-  // var balance = playersContainers[seat].querySelector(
-  //   "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
-  // );
-  var balance = playersContainers[seat].querySelector(
-    "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
-  );
-  if (balance) {
-    player.stack = balance.innerText;
-  }
+  player.stack = getBalance(seat);
+  player.bet = getBet(seat);
 
   return player;
 }
 
+function getButton(seat) {}
+
 //function that initializes the seats and players in each seat.
 function initSeats() {
   var player;
+  var button;
   for (var i = 0; i < playersContainers.length; i++) {
     if (
       playersContainers[i].querySelector(
@@ -90,8 +123,8 @@ function main() {
   initSeats();
 }
 // Run the check every 1 seconds (1000 milliseconds)
-setInterval(activePlayer, 1000);
-setInterval(init, 1000);
+//setInterval(activePlayer, 1000);
+setInterval(main, 1000);
 
 class Player {
   constructor(bet, stack, isActive, inHand) {
@@ -99,5 +132,13 @@ class Player {
     this.stack = stack;
     this.isActive = isActive;
     this.inHand = inHand;
+  }
+}
+
+class Seat {
+  constructor(seatNumber, player, button) {
+    this.seatNumber = seatNumber;
+    this.player = player;
+    this.button = button;
   }
 }
