@@ -73,17 +73,47 @@ function getBet(seat) {
   else return "0";
 }
 
-function getInHand(seat) {}
+function getInHand(seat) {
+  var hand;
+  hand = playersContainers[seat].querySelector(
+    "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(2) > div > div > div > svg"
+  );
+  if (!hand) {
+    hand = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(4) > div > div > div > svg"
+    );
+  }
+  if (!hand) {
+    hand = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Right > div > div > div:nth-child(2) > div > div > div > svg"
+    );
+  }
+  if (!hand) {
+    hand = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Right > div > div > div:nth-child(4) > div > div > div > svg"
+    );
+  }
+
+  if (hand) hand = hand.dataset.qa;
+  return hand != "card-1";
+}
 
 function initPlayer(seat) {
-  var player = new Player(0, 0, "ACTIVE", "INHAND");
+  var player = new Player(0, 0, true, false, false);
   player.stack = getBalance(seat);
   player.bet = getBet(seat);
-
+  player.inHand = getInHand(seat);
   return player;
 }
 
-function getButton(seat) {}
+function getButton(seat) {
+  var button;
+  button = playersContainers[seat].querySelector(
+    "div > div:nth-child(2) > div.fm87pe9.Desktop"
+  );
+
+  return button.style.visibility != "hidden";
+}
 
 //function that initializes the seats and players in each seat.
 function initSeats() {
@@ -95,12 +125,12 @@ function initSeats() {
         "div > div:nth-child(2) > div.feis0ob.Desktop"
       )
     ) {
-      player = new Player(0, 0, "NOT IN HAND", "INACTIVE");
+      player = new Player(0, 0, false, false, false);
     } else {
       player = initPlayer(i);
     }
     players[i] = player;
-    // console.log(playersContainers[i]);
+    players[i].button = getButton(i);
   }
   console.log(players);
 }
@@ -127,18 +157,11 @@ function main() {
 setInterval(main, 1000);
 
 class Player {
-  constructor(bet, stack, isActive, inHand) {
+  constructor(bet, stack, isActive, inHand, button) {
     this.bet = bet;
     this.stack = stack;
     this.isActive = isActive;
     this.inHand = inHand;
-  }
-}
-
-class Seat {
-  constructor(seatNumber, player, button) {
-    this.seatNumber = seatNumber;
-    this.player = player;
     this.button = button;
   }
 }
