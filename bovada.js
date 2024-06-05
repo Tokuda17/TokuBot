@@ -1,5 +1,4 @@
 var board;
-var seats = new Array(9);
 const playersContainers = new Array(9);
 const players = new Array(9);
 var myPlayer;
@@ -35,33 +34,33 @@ function getBoard() {}
 
 function isInHand() {}
 
-function getBalance(seat) {
-  var balance;
+function getStack(seat) {
+  var stack;
   if (seat == myPlayer) {
-    balance = playersContainers[seat].querySelector(
+    stack = playersContainers[seat].querySelector(
       "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone.fimvvv > div > span"
     );
   } else {
-    balance = playersContainers[seat].querySelector(
+    stack = playersContainers[seat].querySelector(
       "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
     );
-    if (!balance) {
-      balance = playersContainers[seat].querySelector(
+    if (!stack) {
+      stack = playersContainers[seat].querySelector(
         "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.rightPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
       );
     }
-    if (!balance) {
-      balance = playersContainers[seat].querySelector(
+    if (!stack) {
+      stack = playersContainers[seat].querySelector(
         "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
       );
     }
-    if (!balance) {
-      balance = playersContainers[seat].querySelector(
+    if (!stack) {
+      stack = playersContainers[seat].querySelector(
         "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.rightPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
       );
     }
   }
-  if (balance) return balance.innerText;
+  if (stack) return stack.innerText;
 }
 
 function getBet(seat) {
@@ -98,11 +97,47 @@ function getInHand(seat) {
   return hand != "card-1";
 }
 
+function getCards(seat) {
+  var cards = [];
+
+  var card1 = playersContainers[seat].querySelector(
+    "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(2) > div > div > div.landscape.f1jmqybh.f169eucp.f45h > svg"
+  );
+  if (!card1) {
+    card1 = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(3) > div.f1itp13a.Left > div > div > div:nth-child(2) > div > div > div.landscape.f1jmqybh.f169eucp.f45h > svg"
+    );
+  }
+  var card2 = playersContainers[seat].querySelector(
+    "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(4) > div > div > div.landscape.f1jmqybh.f1x351eq.f45h > svg"
+  );
+  if (!card2) {
+    card2 = playersContainers[seat].querySelector(
+      "div > div:nth-child(2) > div:nth-child(3) > div.f1itp13a.Left > div > div > div:nth-child(4) > div > div > div.landscape.f1jmqybh.f1x351eq.f45h > svg"
+    );
+  }
+
+  cards.push(new Card(card1.dataset.qa));
+  cards.push(new Card(card2.dataset.qa));
+
+  return cards;
+}
+
 function initPlayer(seat) {
-  var player = new Player(0, 0, true, false, false);
-  player.stack = getBalance(seat);
-  player.bet = getBet(seat);
-  player.inHand = getInHand(seat);
+  var player;
+  var stack = getStack(seat);
+  var bet = getBet(seat);
+  var inHand = getInHand(seat);
+
+  if (seat != myPlayer) {
+    player = new Player(bet, stack, true, inHand, false);
+  } else if (inHand) {
+    var cards = getCards(myPlayer);
+    player = new MyPlayer(bet, stack, true, inHand, false, cards[0], cards[1]);
+  } else {
+    player = new MyPlayer(bet, stack, true, inHand, false);
+  }
+
   return player;
 }
 
@@ -163,5 +198,33 @@ class Player {
     this.isActive = isActive;
     this.inHand = inHand;
     this.button = button;
+  }
+}
+
+class MyPlayer extends Player {
+  constructor(bet, stack, isActive, inHand, button, card1, card2) {
+    super(bet, stack, isActive, inHand, button);
+
+    this.card1 = card1;
+    this.card2 = card2;
+  }
+}
+
+class Card {
+  constructor(card) {
+    card = parseInt(card.substring(4));
+    var suit = card / 13;
+    var num = card % 13;
+
+    if (suit < 1) this.suit = "c";
+    else if (suit < 2) this.suit = "d";
+    else if (suit < 3) this.suit = "h";
+    else this.suit = "s";
+
+    if (num == 0) this.num = "A";
+    else if (num == 10) this.num = "J";
+    else if (num == 11) this.num = "Q";
+    else if (num == 12) this.num = "K";
+    else this.num = (num + 1).toString();
   }
 }
