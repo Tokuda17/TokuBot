@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test Button</title>
+    <title>Bovada Players</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #playerList {
+        list-style: none;
+        padding: 0;
+      }
+      #playerList li {
+        padding: 5px 0;
+      }
+    </style>
   </head>
   <body>
-    <button id="run-script">Run Script</button>
-    <script type="module" src="popup.js"></script>
+    <h1>Players</h1>
+    <ul id="playerList"></ul>
+    <script src="popup.js"></script>
   </body>
 </html>
