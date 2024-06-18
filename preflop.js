@@ -1439,29 +1439,150 @@ preflop.push(bb);
 // e -> represents column of chart
 
 function getMove() {
-  var myPlayer = getMyPlayerPosition();
-  var raiser = getLastRaiser();
-  var isThreeBet = isThreeBet(myPlayer, raiser);
-  var cards = getCards();
+  removePlayers();
+  var button = getButton();
+  orderPlayers(button);
+
+  var myPlayer = getMyPlayerPosition(players);
+  var raisers = getRaisers(myPlayer);
+  var threeBet = isThreeBet(raisers, myPlayer);
+  var a = 9 - players.length + myPlayer;
+  var b = threeBet;
+  var c = 0;
+  if (raisers.length > 0)
+    c = 9 - players.length + raisers[raisers.length - 1].pos + 1;
+  console.log(a);
+  console.log(b);
+  console.log(c);
+
+  console.log(preflop[a][b][c]);
 
   //using this information to search for cell that corrosponds to best move
 }
 
+function removePlayers() {
+  players = players.filter((player) => player.inHand);
+}
+
+function orderPlayers(button) {
+  var temp = [];
+  for (var i = 0; i < players.length; i++) {
+    var index = (button + i + 3) % players.length;
+    temp.push(players[index]);
+  }
+  players = temp;
+}
+
+function getButton() {
+  for (var i = 0; i < players.length; i++) {
+    if (players[i].button) return i;
+  }
+}
+
 function getMyPlayerPosition() {
+  for (var i = 0; i < players.length; i++) {
+    if (players[i].card1) return i;
+  }
   return myPlayer;
 }
-function getLastRaiser() {
-  return raiser;
+
+function getRaisers(myPlayer) {
+  var maxBet = parseInt(players[players.length - 1].bet);
+  var raisers = [];
+  for (var i = 0; i < players.length; i++) {
+    if (i != myPlayer && parseInt(players[i].bet) > parseInt(maxBet)) {
+      maxBet = parseInt(players[i].bet);
+      raisers.push({ player: players[i], pos: i });
+    }
+  }
+
+  return raisers;
 }
-function isThreeBet() {
-  if (myPlayer > raiser) {
-    return 1;
-  } else return 0;
+
+function isThreeBet(raisers, myPlayer) {
+  if (raisers.length > 1) return 1;
+  for (var i = 0; i < raisers.length; i++) {
+    if (raisers[i].pos > myPlayer) return 1;
+  }
+  return 0;
 }
+
 function getCards() {
   return cards;
 }
 
-console.log(preflop[0][0][0]);
+var players = [
+  {
+    bet: "2",
+    stack: "380",
+    isActive: true,
+    inHand: true,
+    button: false,
+  },
+  {
+    bet: "4",
+    stack: "396",
+    isActive: true,
+    inHand: true,
+    button: false,
+  },
+  {
+    bet: "12",
+    stack: "0",
+    isActive: true,
+    inHand: true,
+    button: false,
+  },
+  {
+    bet: "0",
+    stack: "948.23",
+    isActive: true,
+    inHand: true,
+    button: false,
+  },
+  {
+    bet: "",
+    stack: "394",
+    isActive: true,
+    inHand: true,
+    button: false,
+    card1: {
+      suit: "c",
+      num: "6",
+    },
+    card2: {
+      suit: "h",
+      num: "3",
+    },
+  },
+  {
+    bet: "",
+    stack: "832.50",
+    isActive: true,
+    inHand: true,
+    button: false,
+  },
+  {
+    bet: "",
+    stack: "384",
+    isActive: true,
+    inHand: true,
+    button: true,
+  },
+  {
+    bet: "",
+    stack: "1,054",
+    isActive: true,
+    inHand: false,
+    button: false,
+  },
+  {
+    bet: "",
+    stack: "400",
+    isActive: true,
+    inHand: false,
+    button: false,
+  },
+];
 
 getMove();

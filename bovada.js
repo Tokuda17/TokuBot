@@ -192,6 +192,13 @@ function main() {
   initSeats();
 }
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  main();
+  if (request.greeting === "hello") {
+    sendResponse(getPlayers());
+  }
+});
+
 // Run the check every 1 seconds (1000 milliseconds)
 setInterval(activePlayer, 1000);
 setInterval(main, 1000);
