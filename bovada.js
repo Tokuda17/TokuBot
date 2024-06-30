@@ -172,13 +172,13 @@ function initSeats() {
 
 //returns when activePlayer is user
 function activePlayer() {
-  isActive = game.querySelector(
+  var isActive = game.querySelector(
     `#root > div > div.frlfvhr > div.f1l5nl24 > div.fmyv4dc > div.f1qy5s7k > div:nth-child(1) > div.fsusjyu.Desktop.landscape.f1u9jrie > div.f1so0fyt > div:nth-child(${
       myPlayer + 2
     }) > div > div:nth-child(2) > div:nth-child(3) > div.f1p7lubp.Desktop.landscape.leftPlayer.notZone.myPlayer > div.f1qbx4ty.Desktop.f1cwv3sl`
   );
-
-  return true;
+  if (isActive) return true;
+  return false;
 }
 
 function getPlayers() {
@@ -190,17 +190,16 @@ function getPlayers() {
 function main() {
   init();
   initSeats();
+
+  if (activePlayer()) {
+    const response = chrome.runtime.sendMessage({
+      message: "getPlayers",
+      players: getPlayers(),
+    });
+  }
 }
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  main();
-  if (request.greeting === "hello") {
-    sendResponse(getPlayers());
-  }
-});
-
 // Run the check every 1 seconds (1000 milliseconds)
-setInterval(activePlayer, 1000);
 setInterval(main, 1000);
 
 class Player {

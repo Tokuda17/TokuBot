@@ -1,3 +1,5 @@
+const bigBlind = 4;
+
 var preflop = [];
 
 var utg = [];
@@ -1043,19 +1045,19 @@ var btnVBbBet = [
 ];
 //Small Blind
 var sbOpen = [
-  ["c", "r", "r", "r", "r", "c", "c", "c", "c", "c", "c", "c", "c"],
-  ["c", "c", "r", "r", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-  ["r", "r", "r", "r", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-  ["r", "r", "c", "r", "c", "c", "c", "c", "c", "c", "b", "b", "b"],
-  ["r", "c", "c", "c", "r", "c", "c", "c", "c", "b", "b", "f", "f"],
-  ["c", "c", "c", "c", "c", "r", "c", "c", "c", "b", "b", "f", "f"],
-  ["c", "c", "c", "c", "c", "c", "r", "c", "c", "b", "b", "f", "f"],
-  ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "b", "f", "f"],
-  ["c", "c", "c", "b", "b", "b", "b", "c", "c", "c", "c", "b", "f"],
-  ["c", "c", "b", "f", "f", "f", "f", "f", "c", "c", "c", "b", "f"],
-  ["c", "c", "b", "f", "f", "f", "f", "f", "f", "f", "c", "b", "f"],
-  ["c", "b", "b", "f", "f", "f", "f", "f", "f", "f", "f", "c", "c"],
-  ["c", "b", "b", "f", "f", "f", "f", "f", "f", "f", "f", "f", "c"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f"],
+  ["r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f"],
+  ["r", "r", "f", "f", "f", "r", "r", "r", "r", "r", "r", "f", "f"],
+  ["r", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "f", "f"],
+  ["r", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "f"],
+  ["r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r", "f"],
+  ["r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r"],
+  ["r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r"],
 ];
 
 var sbVUtg = [
@@ -1173,35 +1175,19 @@ var sbVBtn = [
 //Small Blind Three Bet
 
 var sbVBbBet = [
-  ["f", "r", "r", "r", "c", "f", "f", "f", "f", "f", "f", "f", "f"],
-  ["f", "f", "c", "c", "f", "f", "f", "f", "f", "f", "f", "f", "f"],
-  ["r", "c", "r", "c", "f", "f", "f", "f", "f", "f", "f", "f", "f"],
-  ["c", "c", "f", "r", "f", "f", "f", "f", "f", "f", "b", "f", "f"],
-  ["c", "f", "f", "f", "c", "f", "f", "f", "f", "f", "f", "f", "f"],
-  ["f", "f", "f", "f", "f", "c", "f", "f", "f", "c", "f", "f", "f"],
-  ["f", "f", "f", "f", "f", "f", "c", "f", "f", "c", "f", "f", "f"],
-  ["f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "c", "f", "f"],
-  ["f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f"],
+  ["r", "r", "r", "r", "c", "c", "c", "c", "b", "b", "b", "b", "f"],
+  ["r", "r", "c", "c", "c", "c", "c", "f", "f", "f", "f", "f", "f"],
+  ["r", "r", "r", "c", "c", "b", "f", "f", "f", "f", "f", "f", "f"],
+  ["r", "b", "f", "r", "c", "b", "f", "f", "f", "f", "f", "f", "f"],
+  ["b", "f", "f", "f", "r", "c", "f", "f", "f", "f", "f", "f", "f"],
+  ["f", "f", "f", "f", "f", "c", "f", "f", "f", "f", "f", "f", "f"],
+  ["f", "f", "f", "f", "f", "f", "c", "f", "f", "f", "f", "f", "f"],
+  ["f", "f", "f", "f", "f", "f", "f", "c", "f", "f", "f", "f", "f"],
+  ["f", "f", "f", "f", "f", "f", "f", "f", "c", "f", "f", "f", "f"],
+  ["f", "f", "b", "f", "f", "f", "f", "f", "f", "c", "f", "f", "f"],
   ["f", "f", "b", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f"],
-  ["f", "f", "b", "f", "f", "f", "f", "f", "f", "f", "f", "c", "f"],
   ["f", "b", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f"],
   ["f", "b", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f"],
-];
-
-var sbVBbLimp = [
-  ["r", "f", "f", "f", "f", "c", "c", "c", "c", "c", "c", "c", "c"],
-  ["r", "r", "f", "f", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-  ["f", "f", "f", "f", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-  ["f", "f", "c", "f", "c", "c", "c", "c", "c", "c", "f", "f", "f"],
-  ["f", "c", "c", "c", "f", "c", "c", "c", "c", "f", "f", "f", "f"],
-  ["c", "c", "c", "c", "c", "f", "c", "c", "c", "f", "f", "f", "f"],
-  ["c", "c", "c", "c", "c", "c", "f", "c", "c", "f", "f", "f", "f"],
-  ["c", "c", "b", "f", "f", "c", "c", "c", "c", "c", "f", "f", "f"],
-  ["c", "b", "f", "f", "f", "f", "f", "c", "c", "c", "c", "f", "f"],
-  ["c", "b", "f", "f", "f", "f", "f", "f", "f", "c", "c", "f", "f"],
-  ["c", "f", "f", "f", "f", "f", "f", "f", "f", "f", "c", "f", "f"],
-  ["b", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "c", "c"],
-  ["b", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "c"],
 ];
 
 //Big Blind
@@ -1418,7 +1404,6 @@ sb[0].push(sbVHj);
 sb[0].push(sbVCo);
 sb[0].push(sbVBtn);
 sb[1].push(sbVBbBet);
-sb[1].push(sbVBbLimp);
 preflop.push(sb);
 
 bb[0].push(bbVUtg);
@@ -1437,48 +1422,46 @@ preflop.push(bb);
 // c -> represents position of last raiser
 // d -> represents row of chart
 // e -> represents column of chart
+var players;
 
-function getMove() {
-  removePlayers();
-  var button = getButton();
-  orderPlayers(button);
+export function getMove(x) {
+  players = x;
+  //remove players that are not playing
+  removeInactivePlayers();
+  //get the button position
+  const button = getButton();
+  //get the player position in the array
+  const playerPos = getMyPlayerPosition();
+  //get the player position with respects to the button
+  const preflopPos = getPreflopPosition(button, playerPos);
 
-  var myPlayer = getMyPlayerPosition(players);
-  var raisers = getRaisers(myPlayer);
-  var threeBet = isThreeBet(raisers, myPlayer);
-  var a = 9 - players.length + myPlayer;
-  var b = threeBet;
-  var c = 0;
-  if (raisers.length > 0)
-    c = 9 - players.length + raisers[raisers.length - 1].pos + 1;
-  console.log(a);
-  console.log(b);
-  console.log(c);
+  //Branch into two seperate scenarios Standard Open vs Facing Three bet
 
-  console.log(preflop[a][b][c]);
-
-  //using this information to search for cell that corrosponds to best move
-}
-
-function removePlayers() {
-  players = players.filter((player) => player.inHand);
-}
-
-function orderPlayers(button) {
-  var temp = [];
-  for (var i = 0; i < players.length; i++) {
-    var index = (button + i + 3) % players.length;
-    temp.push(players[index]);
+  if (players[playerPos].bet > bigBlind) {
+    var move = threeBet(preflopPos, playerPos, button);
+  } else {
+    var move = standardOpen(preflopPos, playerPos, button);
   }
-  players = temp;
+  console.log("a: " + move.a);
+  console.log("b: " + move.b);
+  console.log("c: " + move.c);
+
+  return preflop[move.a][move.b][move.c];
 }
 
+//remove players that are inactive
+function removeInactivePlayers() {
+  players = players.filter((player) => player.isActive);
+}
+
+//getButton location
 function getButton() {
   for (var i = 0; i < players.length; i++) {
     if (players[i].button) return i;
   }
 }
 
+//get players position in array
 function getMyPlayerPosition() {
   for (var i = 0; i < players.length; i++) {
     if (players[i].card1) return i;
@@ -1486,103 +1469,162 @@ function getMyPlayerPosition() {
   return myPlayer;
 }
 
-function getRaisers(myPlayer) {
-  var maxBet = parseInt(players[players.length - 1].bet);
+//get players position relative to Big Blind
+function getPreflopPosition(button, pos) {
+  var count = 0;
+  button += 2;
+  for (var i = 1; i < players.length; i++) {
+    var pointer = (button + i) % players.length;
+    if (pointer == pos) return count;
+    else count++;
+  }
+  return count;
+}
+
+//gets all the raisers
+function getRaisers(player, minBet, button) {
   var raisers = [];
-  for (var i = 0; i < players.length; i++) {
-    if (i != myPlayer && parseInt(players[i].bet) > parseInt(maxBet)) {
-      maxBet = parseInt(players[i].bet);
-      raisers.push({ player: players[i], pos: i });
+  for (var i = 1; i < players.length; i++) {
+    var pointer = (player + i) % players.length;
+    if (parseInt(players[pointer].bet) > minBet) {
+      minBet = parseInt(players[pointer].bet);
+      raisers.push({
+        player: players[pointer],
+        pos: getPreflopPosition(button, pointer) + 1,
+      });
     }
   }
-
   return raisers;
 }
 
-function isThreeBet(raisers, myPlayer) {
-  if (raisers.length > 1) return 1;
-  for (var i = 0; i < raisers.length; i++) {
-    if (raisers[i].pos > myPlayer) return 1;
+function threeBet(preflopPos, playerPos, button) {
+  console.log("Three Bet");
+  a = 9 - players.length + preflopPos;
+  var a, b, c;
+  var raisers = getRaisers(playerPos, players[playerPos].bet, button);
+  if (raisers.length == 1) {
+    b = 1;
+    c = getThreeBetPosition(a, raisers[0].pos);
+    //if facing three bet from original raiser, default to tightest range
+    if (!preflop[a][b][c]) {
+      a = 0;
+      b = 1;
+      c = 0;
+    }
   }
-  return 0;
+  //If facing two three default to tighest range
+  else {
+    a = 0;
+    b = 1;
+    c = 0;
+  }
+  return { a: a, b: b, c: c };
 }
 
-function getCards() {
-  return cards;
+function standardOpen(preflopPos, playerPos, button) {
+  var a, b, c;
+  a = 9 - players.length + preflopPos;
+  console.log("Standard Open");
+  var raisers = getRaisers(playerPos, bigBlind, button);
+  if (raisers.length == 0) {
+    b = 0;
+    c = 0;
+  } else if (raisers.length == 1) {
+    b = 0;
+    c = raisers[0].pos;
+  } else {
+    // facing two raisers, defaults to tighest range utg v utg + 1
+    a = 0;
+    b = 1;
+    c = 0;
+  }
+  return { a: a, b: b, c: c };
 }
 
-var players = [
-  {
-    bet: "2",
-    stack: "380",
-    isActive: true,
-    inHand: true,
-    button: false,
-  },
-  {
-    bet: "4",
-    stack: "396",
-    isActive: true,
-    inHand: true,
-    button: false,
-  },
-  {
-    bet: "12",
-    stack: "0",
-    isActive: true,
-    inHand: true,
-    button: false,
-  },
-  {
-    bet: "0",
-    stack: "948.23",
-    isActive: true,
-    inHand: true,
-    button: false,
-  },
-  {
-    bet: "",
-    stack: "394",
-    isActive: true,
-    inHand: true,
-    button: false,
-    card1: {
-      suit: "c",
-      num: "6",
-    },
-    card2: {
-      suit: "h",
-      num: "3",
-    },
-  },
-  {
-    bet: "",
-    stack: "832.50",
-    isActive: true,
-    inHand: true,
-    button: false,
-  },
-  {
-    bet: "",
-    stack: "384",
-    isActive: true,
-    inHand: true,
-    button: true,
-  },
-  {
-    bet: "",
-    stack: "1,054",
-    isActive: true,
-    inHand: false,
-    button: false,
-  },
-  {
-    bet: "",
-    stack: "400",
-    isActive: true,
-    inHand: false,
-    button: false,
-  },
-];
+function getThreeBetPosition(player, pos) {
+  var count = 0;
+  for (var i = 1; i < players.length + 1; i++) {
+    var pointer = (player + i) % (players.length + 1);
+    if (pointer == pos) return count;
+    else count++;
+  }
+  return count;
+}
 
-getMove();
+function getCards() {}
+
+// var players = [
+//   {
+//     bet: "",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//   },
+//   {
+//     bet: "",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//   },
+//   {
+//     bet: "0",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//     card1: {
+//       suit: "c",
+//       num: "6",
+//     },
+//     card2: {
+//       suit: "h",
+//       num: "3",
+//     },
+//   },
+//   {
+//     bet: "0",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: true,
+//   },
+//   {
+//     bet: "2",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//   },
+//   {
+//     bet: "4",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//   },
+//   {
+//     bet: "",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//   },
+//   {
+//     bet: "",
+//     stack: "400",
+//     isActive: true,
+//     inHand: true,
+//     button: false,
+//   },
+//   {
+//     bet: "",
+//     stack: "400",
+//     isActive: false,
+//     inHand: true,
+//     button: false,
+//   },
+// ];
+
+// getMove();

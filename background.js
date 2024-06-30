@@ -1,18 +1,24 @@
 import { getMove } from "./preflop.js";
 var players;
 
-async function main() {
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    lastFocusedWindow: true,
-  });
+// async function main() {
+//   const [tab] = await chrome.tabs.query({
+//     active: true,
+//     lastFocusedWindow: true,
+//   });
 
-  players = await chrome.tabs.sendMessage(tab.id, { greeting: "hello" });
-  getPreFlopMove();
-}
+//   const response =
+// }
 
-function getPreFlopMove() {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === "getPlayers") {
+    getPreFlopMove(request.players);
+  }
+});
+
+//setInterval(main, 1000);
+
+function getPreFlopMove(players) {
   const move = getMove(players);
+  console.log(move);
 }
-
-setInterval(main, 1000);
