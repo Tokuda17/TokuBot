@@ -196,6 +196,10 @@ function main() {
       message: "getPlayers",
       players: getPlayers(),
     });
+  } else {
+    chrome.runtime.sendMessage({
+      message: "resetBoard",
+    });
   }
 }
 

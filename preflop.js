@@ -1442,9 +1442,9 @@ export function getMove(x) {
   } else {
     var move = standardOpen(preflopPos, playerPos, button);
   }
-  console.log("a: " + move.a);
-  console.log("b: " + move.b);
-  console.log("c: " + move.c);
+  // console.log("a: " + move.a);
+  // console.log("b: " + move.b);
+  // console.log("c: " + move.c);
 
   return preflop[move.a][move.b][move.c];
 }

@@ -1,23 +1,256 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Bovada Players</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poker Preflop Chart</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
+      table {
+        width: 100%;
+        border-collapse: collapse;
       }
-      #playerList {
-        list-style: none;
-        padding: 0;
+      td,
+      th {
+        border: 1px solid black;
+        padding: 2px;
+        text-align: center;
       }
-      #playerList li {
-        padding: 5px 0;
+      th {
+        background-color: #f2f2f2;
       }
     </style>
   </head>
   <body>
-    <h1>Players</h1>
-    <ul id="playerList"></ul>
+    <table id="pokerTable">
+      <thead>
+        <tr>
+          <th></th>
+          <th>A</th>
+          <th>K</th>
+          <th>Q</th>
+          <th>J</th>
+          <th>T</th>
+          <th>9</th>
+          <th>8</th>
+          <th>7</th>
+          <th>6</th>
+          <th>5</th>
+          <th>4</th>
+          <th>3</th>
+          <th>2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>A</th>
+          <td id="0">AA</td>
+          <td id="1">AKs</td>
+          <td id="2">AQs</td>
+          <td id="3">AJs</td>
+          <td id="4">ATs</td>
+          <td id="5">A9s</td>
+          <td id="6">A8s</td>
+          <td id="7">A7s</td>
+          <td id="8">A6s</td>
+          <td id="9">A5s</td>
+          <td id="10">A4s</td>
+          <td id="11">A3s</td>
+          <td id="12">A2s</td>
+        </tr>
+        <tr>
+          <th>K</th>
+          <td id="13">AKo</td>
+          <td id="14">KK</td>
+          <td id="15">KQs</td>
+          <td id="16">KJs</td>
+          <td id="17">KTs</td>
+          <td id="18">K9s</td>
+          <td id="19">K8s</td>
+          <td id="20">K7s</td>
+          <td id="21">K6s</td>
+          <td id="22">K5s</td>
+          <td id="23">K4s</td>
+          <td id="24">K3s</td>
+          <td id="25">K2s</td>
+        </tr>
+        <tr>
+          <th>Q</th>
+          <td id="26">AQo</td>
+          <td id="27">KQo</td>
+          <td id="28">QQ</td>
+          <td id="29">QJs</td>
+          <td id="30">QTs</td>
+          <td id="31">Q9s</td>
+          <td id="32">Q8s</td>
+          <td id="33">Q7s</td>
+          <td id="34">Q6s</td>
+          <td id="35">Q5s</td>
+          <td id="36">Q4s</td>
+          <td id="37">Q3s</td>
+          <td id="38">Q2s</td>
+        </tr>
+        <tr>
+          <th>J</th>
+          <td id="39">AJo</td>
+          <td id="40">KJo</td>
+          <td id="41">QJo</td>
+          <td id="42">JJ</td>
+          <td id="43">JTs</td>
+          <td id="44">J9s</td>
+          <td id="45">J8s</td>
+          <td id="46">J7s</td>
+          <td id="47">J6s</td>
+          <td id="48">J5s</td>
+          <td id="49">J4s</td>
+          <td id="50">J3s</td>
+          <td id="51">J2s</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td id="52">ATo</td>
+          <td id="53">KTo</td>
+          <td id="54">QTo</td>
+          <td id="55">JTo</td>
+          <td id="56">TT</td>
+          <td id="57">T9s</td>
+          <td id="58">T8s</td>
+          <td id="59">T7s</td>
+          <td id="60">T6s</td>
+          <td id="61">T5s</td>
+          <td id="62">T4s</td>
+          <td id="63">T3s</td>
+          <td id="64">T2s</td>
+        </tr>
+        <tr>
+          <th>9</th>
+          <td id="65">A9o</td>
+          <td id="66">K9o</td>
+          <td id="67">Q9o</td>
+          <td id="68">J9o</td>
+          <td id="69">T9o</td>
+          <td id="70">99</td>
+          <td id="71">98s</td>
+          <td id="72">97s</td>
+          <td id="73">96s</td>
+          <td id="74">95s</td>
+          <td id="75">94s</td>
+          <td id="76">93s</td>
+          <td id="77">92s</td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td id="78">A8o</td>
+          <td id="79">K8o</td>
+          <td id="80">Q8o</td>
+          <td id="81">J8o</td>
+          <td id="82">T8o</td>
+          <td id="83">98o</td>
+          <td id="84">88</td>
+          <td id="85">87s</td>
+          <td id="86">86s</td>
+          <td id="87">85s</td>
+          <td id="88">84s</td>
+          <td id="89">83s</td>
+          <td id="90">82s</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td id="91">A7o</td>
+          <td id="92">K7o</td>
+          <td id="93">Q7o</td>
+          <td id="94">J7o</td>
+          <td id="95">T7o</td>
+          <td id="96">97o</td>
+          <td id="97">87o</td>
+          <td id="98">77</td>
+          <td id="99">76s</td>
+          <td id="100">75s</td>
+          <td id="101">74s</td>
+          <td id="102">73s</td>
+          <td id="103">72s</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td id="104">A6o</td>
+          <td id="105">K6o</td>
+          <td id="106">Q6o</td>
+          <td id="107">J6o</td>
+          <td id="108">T6o</td>
+          <td id="109">96o</td>
+          <td id="110">86o</td>
+          <td id="111">76o</td>
+          <td id="112">66</td>
+          <td id="113">65s</td>
+          <td id="114">64s</td>
+          <td id="115">63s</td>
+          <td id="116">62s</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td id="117">A5o</td>
+          <td id="118">K5o</td>
+          <td id="119">Q5o</td>
+          <td id="120">J5o</td>
+          <td id="121">T5o</td>
+          <td id="122">95o</td>
+          <td id="123">85o</td>
+          <td id="124">75o</td>
+          <td id="125">65o</td>
+          <td id="126">55</td>
+          <td id="127">54s</td>
+          <td id="128">53s</td>
+          <td id="129">52s</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td id="130">A4o</td>
+          <td id="131">K4o</td>
+          <td id="132">Q4o</td>
+          <td id="133">J4o</td>
+          <td id="134">T4o</td>
+          <td id="135">94o</td>
+          <td id="136">84o</td>
+          <td id="137">74o</td>
+          <td id="138">64o</td>
+          <td id="139">54o</td>
+          <td id="140">44</td>
+          <td id="141">43s</td>
+          <td id="142">42s</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td id="143">A3o</td>
+          <td id="144">K3o</td>
+          <td id="145">Q3o</td>
+          <td id="146">J3o</td>
+          <td id="147">T3o</td>
+          <td id="148">93o</td>
+          <td id="149">83o</td>
+          <td id="150">73o</td>
+          <td id="151">63o</td>
+          <td id="152">53o</td>
+          <td id="153">43o</td>
+          <td id="154">33</td>
+          <td id="155">32s</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td id="156">A2o</td>
+          <td id="157">K2o</td>
+          <td id="158">Q2o</td>
+          <td id="159">J2o</td>
+          <td id="160">T2o</td>
+          <td id="161">92o</td>
+          <td id="162">82o</td>
+          <td id="163">72o</td>
+          <td id="164">62o</td>
+          <td id="165">52o</td>
+          <td id="166">42o</td>
+          <td id="167">32o</td>
+          <td id="168">22</td>
+        </tr>
+      </tbody>
+    </table>
     <script src="popup.js"></script>
   </body>
 </html>

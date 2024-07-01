@@ -1,24 +1,33 @@
 import { getMove } from "./preflop.js";
 var players;
 
-// async function main() {
-//   const [tab] = await chrome.tabs.query({
-//     active: true,
-//     lastFocusedWindow: true,
-//   });
-
-//   const response =
-// }
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "getPlayers") {
-    getPreFlopMove(request.players);
+    const table = getPreFlopMove(request.players);
+    printTable(table);
+  }
+  if (request.message === "resetBoard") {
+    resetBoard();
   }
 });
 
-//setInterval(main, 1000);
+function printTable(table) {
+  console.log("printTable");
+  chrome.runtime.sendMessage({
+    message: "getTable",
+    table: table,
+  });
+}
+
+function resetBoard() {
+  console.log("resetBoard");
+  chrome.runtime.sendMessage({
+    message: "resetBoard",
+  });
+}
 
 function getPreFlopMove(players) {
   const move = getMove(players);
-  console.log(move);
+  return move;
+  // console.log(move);
 }
