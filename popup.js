@@ -6,6 +6,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "resetBoard") {
     resetBoard();
   }
+  if (request.message === "highlightCards") {
+    highlightCards(request.x, request.y);
+  }
 });
 
 function printBoard(pokerArray) {
@@ -33,12 +36,20 @@ function printBoard(pokerArray) {
   }
 }
 
+function highlightCards(x, y) {
+  console.log("Highlight Cards");
+  var id = x * 13 + y;
+  var element = document.getElementById(id);
+  element.style.backgroundColor = "yellow";
+}
+
 function resetBoard() {
   for (var i = 0; i < 13; i++) {
     for (var j = 0; j < 13; j++) {
       var id = i * 13 + j;
       var element = document.getElementById(id);
       element.style.color = "black";
+      element.style.backgroundColor = "white";
     }
   }
 }

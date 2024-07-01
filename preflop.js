@@ -1551,7 +1551,11 @@ function getThreeBetPosition(player, pos) {
   return count;
 }
 
-function getCards() {}
+export function getCards(x) {
+  players = x;
+  var pos = getMyPlayerPosition();
+  return { card1: players[pos].card1, card2: playeys[pos].card2 };
+}
 
 // var players = [
 //   {

@@ -190,9 +190,8 @@ function getPlayers() {
 function main() {
   init();
   initSeats();
-
   if (activePlayer()) {
-    const response = chrome.runtime.sendMessage({
+    chrome.runtime.sendMessage({
       message: "getPlayers",
       players: getPlayers(),
     });
@@ -201,6 +200,10 @@ function main() {
       message: "resetBoard",
     });
   }
+  chrome.runtime.sendMessage({
+    message: "getCards",
+    cards: { card1: players[myPlayer].card1, card2: players[myPlayer].card2 },
+  });
 }
 
 // Run the check every 1 seconds (1000 milliseconds)
