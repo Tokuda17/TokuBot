@@ -117,8 +117,8 @@ function getCards(seat) {
     );
   }
 
-  cards.push(new Card(card1.dataset.qa));
-  cards.push(new Card(card2.dataset.qa));
+  if (card1) cards.push(new Card(card1.dataset.qa));
+  if (card2) cards.push(new Card(card2.dataset.qa));
 
   return cards;
 }
@@ -185,16 +185,51 @@ function getPlayers() {
   return players;
 }
 
+function displayMove(move) {
+  var element = game.querySelector(
+    "#root > div > div.frlfvhr > div.f1l5nl24 > div.fw2rl7w > div:nth-child(4)"
+  );
+  if (element) {
+    var text;
+    if (move == "f") text = "Fold";
+    if (move == "c") text = "Call";
+    if (move == "r") text = "Raise";
+    if (move == "b") text = "Bluff";
+    element.innerText = text;
+  }
+}
+
+function addMoveNode() {
+  if (
+    !game.querySelector(
+      "#root > div > div.frlfvhr > div.f1l5nl24 > div.fw2rl7w > div:nth-child(4)"
+    )
+  ) {
+    var element = game.querySelector(
+      "#root > div > div.frlfvhr > div.f1l5nl24 > div.fw2rl7w"
+    );
+    var x = element.appendChild(document.createElement("div"));
+    x.innerText = "Hello World";
+    x.style.textAlign = "center";
+    x.style.color = "white";
+  }
+}
+
 //returns whether or not a given player is in the hand
 
-function main() {
+async function main() {
   init();
   initSeats();
+  addMoveNode();
+  displayMove();
+
   if (activePlayer()) {
-    chrome.runtime.sendMessage({
+    const response = await chrome.runtime.sendMessage({
       message: "getPlayers",
       players: getPlayers(),
     });
+    console.log(response);
+    displayMove(response);
   } else {
     chrome.runtime.sendMessage({
       message: "resetBoard",

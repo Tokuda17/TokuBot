@@ -1,13 +1,15 @@
-import { getCards, getMove } from "./preflop.js";
+import { getCards, getChart, getMove } from "./preflop.js";
 var players;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "getPlayers") {
-    const table = getPreFlopMove(request.players);
+    const table = getPreFlopChart(request.players);
+    const cards = getCards(request.players);
+    const move = getMove(table, cards);
+    sendResponse(move);
     printTable(table);
   }
   if (request.message === "getCards") {
-    console.log("getCards");
     highlightCards(request.cards);
   }
   if (request.message === "resetBoard") {
@@ -58,8 +60,8 @@ function highlightCards(cards) {
   }
 }
 
-function getPreFlopMove(players) {
-  const move = getMove(players);
+function getPreFlopChart(players) {
+  const move = getChart(players);
   return move;
   // console.log(move);
 }

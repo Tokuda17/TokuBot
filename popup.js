@@ -18,19 +18,22 @@ function printBoard(pokerArray) {
       var id = i * 13 + j;
       if (pokerArray[i][j] == "r") {
         var element = document.getElementById(id);
-        element.style.color = "red";
+        element.style.backgroundColor = "red";
+        element.style.color = "white";
       }
       if (pokerArray[i][j] == "c") {
         var element = document.getElementById(id);
-        element.style.color = "lawngreen";
+        element.style.backgroundColor = "lawngreen";
+        element.style.color = "white";
       }
       if (pokerArray[i][j] == "b") {
         var element = document.getElementById(id);
-        element.style.color = "blue";
+        element.style.backgroundColor = "blue";
+        element.style.color = "white";
       }
       if (pokerArray[i][j] == "f") {
         var element = document.getElementById(id);
-        element.style.color = "black";
+        element.style.backgroundColor = "white";
       }
     }
   }
@@ -40,7 +43,8 @@ function highlightCards(x, y) {
   console.log("Highlight Cards");
   var id = x * 13 + y;
   var element = document.getElementById(id);
-  element.style.backgroundColor = "yellow";
+  element.style.fontWeight = "bold";
+  element.style.textDecoration = "underline";
 }
 
 function resetBoard() {

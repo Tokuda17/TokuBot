@@ -1424,7 +1424,33 @@ preflop.push(bb);
 // e -> represents column of chart
 var players;
 
-export function getMove(x) {
+export function getMove(chart, cards) {
+  var x = 0;
+  var y = 0;
+  if (cards.card1.num == "A") x = 0;
+  else if (cards.card1.num == "K") x = 1;
+  else if (cards.card1.num == "Q") x = 2;
+  else if (cards.card1.num == "J") x = 3;
+  else x = 14 - parseInt(cards.card1.num);
+  if (cards.card2.num == "A") y = 0;
+  else if (cards.card2.num == "K") y = 1;
+  else if (cards.card2.num == "Q") y = 2;
+  else if (cards.card2.num == "J") y = 3;
+  else y = 14 - parseInt(cards.card2.num);
+  var row, col;
+  if (cards.card1.suit == cards.card2.suit) {
+    row = Math.min(x, y);
+    col = Math.max(x, y);
+  } else {
+    row = Math.max(x, y);
+    col = Math.min(x, y);
+  }
+  console.log("Getting Move");
+  console.log(chart[row][col]);
+  return chart[row][col];
+}
+
+export function getChart(x) {
   players = x;
   //remove players that are not playing
   removeInactivePlayers();
@@ -1554,7 +1580,7 @@ function getThreeBetPosition(player, pos) {
 export function getCards(x) {
   players = x;
   var pos = getMyPlayerPosition();
-  return { card1: players[pos].card1, card2: playeys[pos].card2 };
+  return { card1: players[pos].card1, card2: players[pos].card2 };
 }
 
 // var players = [

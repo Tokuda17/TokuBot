@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "HTML Reader Extension",
+  "name": "TokuBot",
   "version": "1.0",
-  "description": "A Chrome extension that reads and logs HTML content of a page.",
+  "description": "Preflop Charts for poker",
   "permissions": ["activeTab", "scripting", "storage", "nativeMessaging"],
   "background": {
     "service_worker": "background.js",
