@@ -5,11 +5,11 @@
   "description": "Preflop Charts for poker",
   "permissions": ["activeTab", "scripting", "storage", "nativeMessaging"],
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "./frontend/background.js",
     "type": "module"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "./frontend/popup.html",
     "default_icon": {
       "16": "Tokubot.png",
       "48": "Tokubot.png",
@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.bovada.lv/static/poker-game/*"],
-      "js": ["bovada.js"],
+      "js": ["./frontend/bovada.js"],
       "run_at": "document_idle",
       "type": "module"
     }
