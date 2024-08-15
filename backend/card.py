@@ -4,4 +4,4 @@ class Card:
         self.suit = suit
 
     def __repr__(self):
-        return f"{self.value} of {self.suit}"
+        return f"{self.value}{self.suit}"
