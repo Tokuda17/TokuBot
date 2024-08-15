@@ -65,5 +65,3 @@ function getPreFlopChart(players) {
   return move;
   // console.log(move);
 }
-
-print("Branch Pull Test");
