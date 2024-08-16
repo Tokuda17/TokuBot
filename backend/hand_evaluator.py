@@ -28,10 +28,10 @@ def evaluate_hand(hand):
         score += straight_flush[1]
     elif quads[0]:
         score += quads_score
-        score += quads[1]*100
+        score += quads[1]*100000
         for card in hand:
             if card.value != quads[1]:
-                score += 2 ** card.value / 100
+                score += 2 ** card.value
     elif full_house[0]:
         score += full_house_score
         score += full_house[1] * 100 + full_house[2]
@@ -44,7 +44,7 @@ def evaluate_hand(hand):
         score += straight[1]
     elif trips[0]:
         score += trips_score
-        score += trips[1] * 100
+        score += trips[1] * 1000
         for card in hand:
             if card.value != trips[1]:
                 score += 2 ** card.value / 100
