@@ -13,6 +13,7 @@ straight_flush_score = 10000000000
 #param: 5 item array that represents a possible hand
 #return: int -> value of hand
 def evaluate_hand(hand):
+    hand_type = ""
     score = 0
     hand = sort_cards(hand)
     pair = is_pair(hand)
@@ -53,13 +54,13 @@ def evaluate_hand(hand):
         score += two_pair[1][1] * 1000 + two_pair[1][0] * 20
         for card in hand:
             if card.value != two_pair[1][0] or card.value != two_pair[1][1]:
-                score += 2 ** card.value / 100
+                score += card.value
     elif pair[0]:
         score += pair_score
         score += pair[1] * 100
         for card in hand:
             if card.value != pair[1]:
-                score += 2**card.value / 1000
+                score += 2 ** card.value / 1000
     else:
         for card in hand:
             score += 2 ** card.value/100

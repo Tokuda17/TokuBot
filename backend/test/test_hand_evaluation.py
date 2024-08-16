@@ -75,7 +75,6 @@ def test_flush():
         if not is_straight([Card(combo[0], "c"), Card(combo[1], "c"), Card(combo[2], "c"), Card(combo[3], "c"), Card(combo[4], "c")])[0]:  
             flush_combos[combo] = evaluate_hand([Card(combo[0], "c"), Card(combo[1], "c"), Card(combo[2], "c"), Card(combo[3], "c"), Card(combo[4], "c")])
     prev = 100000000
-
     for key, value in flush_combos.items():
         #print(f"{key}: {value}")
         if value > prev:
@@ -90,7 +89,7 @@ def test_full_house():
         two_pair_combos[combo] = evaluate_hand([Card(combo[0], "c"), Card(combo[0], "c"), Card(combo[0], "h"), Card(combo[1], "h"), Card(combo[1], "c")])
     prev = 100000000000
     for key, value in two_pair_combos.items():
-        #print(f"{key}: {value}")
+        print(f"{key}: {value}")
         if value > prev:
             return False
         prev = value
