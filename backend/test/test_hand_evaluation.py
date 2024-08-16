@@ -102,3 +102,20 @@ def test_straight_flush():
             return False
         prev = value
     return True
+
+def test_high_card():
+    high_combos = {}
+    all_combinations = generate_combinations(nums, 5)
+    for combo in all_combinations:
+        if not is_straight([Card(combo[0], "h"), Card(combo[1], "c"), Card(combo[2], "c"), Card(combo[3], "c"), Card(combo[4], "c")])[0]:  
+            high_combos[combo] = evaluate_hand([Card(combo[0], "h"), Card(combo[1], "c"), Card(combo[2], "c"), Card(combo[3], "c"), Card(combo[4], "c")])
+    prev = 100000000
+
+    for key, value in high_combos.items():
+        print(f"{key}: {value}")
+        if value > prev:
+            return False
+        prev = value
+    return True
+
+test_pair()

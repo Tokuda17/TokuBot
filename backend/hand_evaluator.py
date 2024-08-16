@@ -31,7 +31,7 @@ def evaluate_hand(hand):
         score += quads[1]*100
         for card in hand:
             if card.value != quads[1]:
-                score += card.value
+                score += 2 ** card.value / 100
     elif full_house[0]:
         score += full_house_score
         score += full_house[1] * 100 + full_house[2]
@@ -47,13 +47,13 @@ def evaluate_hand(hand):
         score += trips[1] * 100
         for card in hand:
             if card.value != trips[1]:
-                score += card.value
+                score += 2 ** card.value / 100
     elif two_pair[0]:
         score += two_pair_score
         score += two_pair[1][1] * 1000 + two_pair[1][0] * 20
         for card in hand:
             if card.value != two_pair[1][0] or card.value != two_pair[1][1]:
-                score += card.value
+                score += 2 ** card.value / 100
     elif pair[0]:
         score += pair_score
         score += pair[1] * 100
@@ -62,8 +62,8 @@ def evaluate_hand(hand):
                 score += card.value
     else:
         for card in hand:
-            score += 2 ** card.value/1000
-    return score
+            score += 2 ** card.value/100
+    return round(score, 2)
     
 
 def is_pair(hand):
