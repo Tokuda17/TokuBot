@@ -14,11 +14,14 @@ def generate_combinations(array, combination_length):
 def test_pair():
     pair_combos = {}
     for i in nums:
-        pair_combos[i] = evaluate_hand([Card(i, "c"), Card(i, "c"), Card(-1, "h"), Card(1, "h"), Card(0, "c")])
+        non_pair = [n for n in nums if n != i]
+        all_combinations = generate_combinations(non_pair, 3)
+        for combo in all_combinations:
+            pair_combos[tuple([i] + [combo])] = evaluate_hand([Card(i, "c"), Card(i, "c"), Card(combo[0], "h"), Card(combo[1], "h"), Card(combo[2], "c")])
     prev = 10000
     for key, value in pair_combos.items():
         #print(f"{key}: {value}")
-        if value+60 > prev:
+        if value > prev:
             return False
         prev = value
     return True
@@ -46,8 +49,8 @@ def test_trips():
             trip_combos[tuple([i]+[combo])] = evaluate_hand([Card(i, "c"), Card(i, "c"), Card(i, "c"), Card(combo[0], "c"), Card(combo[1], "d")])
     prev = 100000000000
     for key, value in trip_combos.items():
-        print(f"{key}: {value}")
-        if value > prev:
+        #print(f"{key}: {value}")
+        if value >= prev:
             return False
         prev = value
     return True

@@ -59,7 +59,7 @@ def evaluate_hand(hand):
         score += pair[1] * 100
         for card in hand:
             if card.value != pair[1]:
-                score += card.value
+                score += 2**card.value / 1000
     else:
         for card in hand:
             score += 2 ** card.value/100
