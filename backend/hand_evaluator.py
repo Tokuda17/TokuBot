@@ -38,7 +38,7 @@ def evaluate_hand(hand):
     elif flush:
         score += flush_score
         for card in hand:
-            score += card.value
+            score += 2 ** card.value
     elif straight[0]:
         score += straight_score
         score += straight[1]
@@ -50,7 +50,7 @@ def evaluate_hand(hand):
                 score += card.value
     elif two_pair[0]:
         score += two_pair_score
-        score += two_pair[1][0] * 1000 + two_pair[1][1] * 10
+        score += two_pair[1][1] * 1000 + two_pair[1][0] * 20
         for card in hand:
             if card.value != two_pair[1][0] or card.value != two_pair[1][1]:
                 score += card.value
@@ -62,7 +62,7 @@ def evaluate_hand(hand):
                 score += card.value
     else:
         for card in hand:
-            score += card.value
+            score += 2 ** card.value/1000
     return score
     
 
@@ -98,6 +98,7 @@ def is_trips(hand):
     return [False, None]
 
 def is_straight(hand):
+    hand = sort_cards(hand)
     for i in range(1, len(hand)):
         if i == 4 and hand[i].value == 14 and hand[0].value == 2:
             return [True, hand[-2].value]
@@ -162,5 +163,3 @@ def evaluate_board_and_hand(player_hand, board):
         max_score = max(max_score, score)
     
     print(max_score, sort_cards(all_cards))
-
-evaluate_hand()
