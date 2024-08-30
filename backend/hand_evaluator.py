@@ -13,7 +13,6 @@ straight_flush_score = 10000000000
 #param: 5 item array that represents a possible hand
 #return: int -> value of hand
 def evaluate_hand(hand):
-    hand_type = ""
     score = 0
     hand = sort_cards(hand)
     pair = is_pair(hand)
@@ -161,6 +160,7 @@ def evaluate_board_and_hand(player_hand, board):
     max_score = 0
     for hand in all_combinations:
         score = evaluate_hand(hand)
-        max_score = max(max_score, score)
-    
-    print(max_score, sort_cards(all_cards))
+        if score > max_score:
+            max_score = score
+            max_hand = hand
+    return [max_score, sort_cards(max_hand)]

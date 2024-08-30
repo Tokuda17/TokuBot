@@ -2,7 +2,7 @@ import sys
 import os
 from itertools import combinations
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from hand_evaluator import evaluate_hand, is_straight
+from hand_evaluator import evaluate_hand, is_straight, evaluate_board_and_hand
 from card import Card
 
 nums = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
@@ -89,7 +89,7 @@ def test_full_house():
         two_pair_combos[combo] = evaluate_hand([Card(combo[0], "c"), Card(combo[0], "c"), Card(combo[0], "h"), Card(combo[1], "h"), Card(combo[1], "c")])
     prev = 100000000000
     for key, value in two_pair_combos.items():
-        print(f"{key}: {value}")
+        #print(f"{key}: {value}")
         if value > prev:
             return False
         prev = value
@@ -135,6 +135,11 @@ def test_high_card():
         prev = value
     return True
 
+def test_evaluate_board_and_hand():
+    hand = [Card(14, "c"), Card(13, "c")]
+    board = [Card(12, "c"), Card(11, "c"), Card(2, "c")]
+    print(evaluate_board_and_hand(hand, board))
+
 def test():
     print("Pair:", test_pair())
     print("two_pair:", test_two_pairs())
@@ -144,5 +149,6 @@ def test():
     print("full_house:",test_full_house())
     print("quads:",test_quads())
     print("straight_flush:",test_straight_flush())
+    test_evaluate_board_and_hand()
 
 test()
