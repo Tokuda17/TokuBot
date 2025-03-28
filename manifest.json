@@ -19,7 +19,12 @@
   "content_scripts": [
     {
       "matches": ["https://www.bovada.lv/static/poker-game/*"],
-      "js": ["./frontend/bovada.js"],
+      "js": [
+        "./frontend/bovada.js",
+        "./frontend/player.js",
+        "./frontend/seat.js",
+        "./frontend/table.js"
+      ],
       "run_at": "document_idle",
       "type": "module"
     }
