@@ -15,12 +15,21 @@ function init() {
       .getElementsByTagName("div")[0]
       .getElementsByTagName("iframe")[0]
       .contentDocument.getElementsByTagName("html")[0];
+
+    console.log("game", game);
+    console.log(
+      "Test",
+      game.querySelector(
+        `#root > div > div.frlfvhr > div.f1l5nl24 > div.fmyv4dc > div.f1qy5s7k > div:nth-child(1)`
+      )
+    );
     for (var i = 0; i < 9; i++) {
       const player = game.querySelector(
-        `#root > div > div.frlfvhr > div.f1l5nl24 > div.fmyv4dc > div.f1qy5s7k > div:nth-child(1) > div.fsusjyu.Desktop.landscape.f1u9jrie > div.f1so0fyt > div:nth-child(${
+        `#root > div > div.frlfvhr > div.f1l5nl24 > div.fmyv4dc > div.f1qy5s7k > div:nth-child(2) > div.fsusjyu.Desktop.landscape.f1u9jrie > div.f1so0fyt > div:nth-child(${
           i + 2
         })`
       );
+      console.log("player", player);
       if (player.getElementsByClassName("myPlayer")[0]) myPlayer = i;
       playersContainers[i] = player;
     }
@@ -154,6 +163,7 @@ function getButton(seat) {
 function initSeats() {
   var player;
   var button;
+
   for (var i = 0; i < playersContainers.length; i++) {
     if (
       playersContainers[i].querySelector(

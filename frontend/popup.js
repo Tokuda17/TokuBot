@@ -1,5 +1,6 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("popup.js");
+
   if (request.message === "getTable") {
     printBoard(request.table);
   }
@@ -12,7 +13,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function printBoard(pokerArray) {
-  console.log("popup.js** " + pokerArray);
+  console.log("printBoard " + pokerArray);
   for (var i = 0; i < 13; i++) {
     for (var j = 0; j < 13; j++) {
       var id = i * 13 + j;
@@ -48,10 +49,12 @@ function highlightCards(x, y) {
 }
 
 function resetBoard() {
+  console.log("resetting board");
   for (var i = 0; i < 13; i++) {
     for (var j = 0; j < 13; j++) {
       var id = i * 13 + j;
       var element = document.getElementById(id);
+      console.log(element);
       element.style.color = "black";
       element.style.backgroundColor = "white";
     }

@@ -1,5 +1,6 @@
 import { getCards, getChart, getMove } from "./preflop.js";
 var players;
+console.log("BACKGROUND.js");
 //tester
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "getPlayers") {

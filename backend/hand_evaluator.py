@@ -102,7 +102,7 @@ def is_straight(hand):
     for i in range(1, len(hand)):
         if i == 4 and hand[i].value == 14 and hand[0].value == 2:
             return [True, hand[-2].value]
-        if hand[i].value != hand[i-1].value+1:
+        if hand[i].value != hand[i-1].value + 1:
             return [False, None]
     return [True, hand[-1].value]
 
