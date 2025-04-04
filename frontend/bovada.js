@@ -4,38 +4,28 @@ const players = new Array(9);
 var myPlayer;
 var game;
 
-//function that finds the game html files for bovada
-function init() {
-  try {
-    game = document
-      .getElementById("root")
-      .getElementsByClassName("f8wu152")[0]
-      .getElementsByClassName("f5ukfdt")[0]
-      .getElementsByClassName("f1djomsr")[0]
-      .getElementsByTagName("div")[0]
-      .getElementsByTagName("iframe")[0]
-      .contentDocument.getElementsByTagName("html")[0];
+const PLAYER_CONTAINER_HTML_TAG = ".f1phzx2y";
 
-    console.log("game", game);
-    console.log(
-      "Test",
-      game.querySelector(
-        `#root > div > div.frlfvhr > div.f1l5nl24 > div.fmyv4dc > div.f1qy5s7k > div:nth-child(1)`
-      )
-    );
-    for (var i = 0; i < 9; i++) {
-      const player = game.querySelector(
-        `#root > div > div.frlfvhr > div.f1l5nl24 > div.fmyv4dc > div.f1qy5s7k > div:nth-child(2) > div.fsusjyu.Desktop.landscape.f1u9jrie > div.f1so0fyt > div:nth-child(${
-          i + 2
-        })`
+//Returns a List of Player Containers where each container contains information about a specific player
+function getPlayerContainers() {
+  //Queries all iframes
+  const iframes = document.querySelectorAll("iframe");
+
+  //Loops through iframes
+  iframes.forEach((iframe, index) => {
+    try {
+      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+      //Select all Elements with the player_container tag
+      const iframeElements = innerDoc.querySelectorAll(
+        PLAYER_CONTAINER_HTML_TAG
       );
-      console.log("player", player);
-      if (player.getElementsByClassName("myPlayer")[0]) myPlayer = i;
-      playersContainers[i] = player;
+      if (iframeElements.length > 0) {
+        return iframeElements;
+      }
+    } catch (error) {
+      console.error(`getPlayerContainers() Failed`, error);
     }
-  } catch (error) {
-    console.log("Trying Again");
-  }
+  });
 }
 
 //functions that updates the board and potsize
@@ -226,68 +216,31 @@ function addMoveNode() {
 }
 
 //returns whether or not a given player is in the hand
-
+//"8ed4c725-2fa0-43d7-a49c-fb3b98a9589a"
 async function main() {
-  init();
-  initSeats();
-  addMoveNode();
-  displayMove();
+  // init();
+  // initSeats();
+  // addMoveNode();
+  getPlayerData2();
+  // displayMove();
 
-  if (activePlayer()) {
-    const response = await chrome.runtime.sendMessage({
-      message: "getPlayers",
-      players: getPlayers(),
-    });
-    console.log(response);
-    displayMove(response);
-  } else {
-    chrome.runtime.sendMessage({
-      message: "resetBoard",
-    });
-  }
-  chrome.runtime.sendMessage({
-    message: "getCards",
-    cards: { card1: players[myPlayer].card1, card2: players[myPlayer].card2 },
-  });
+  // if (activePlayer()) {
+  //   const response = await chrome.runtime.sendMessage({
+  //     message: "getPlayers",
+  //     players: getPlayers(),
+  //   });
+  //   console.log(response);
+  //   displayMove(response);
+  // } else {
+  //   chrome.runtime.sendMessage({
+  //     message: "resetBoard",
+  //   });
+  // }
+  // chrome.runtime.sendMessage({
+  //   message: "getCards",
+  //   cards: { card1: players[myPlayer].card1, card2: players[myPlayer].card2 },
+  // });
 }
 
 // Run the check every 1 seconds (1000 milliseconds)
 setInterval(main, 1000);
-
-class Player {
-  constructor(bet, stack, isActive, inHand, button) {
-    this.bet = bet;
-    this.stack = stack;
-    this.isActive = isActive;
-    this.inHand = inHand;
-    this.button = button;
-  }
-}
-
-class MyPlayer extends Player {
-  constructor(bet, stack, isActive, inHand, button, card1, card2) {
-    super(bet, stack, isActive, inHand, button);
-
-    this.card1 = card1;
-    this.card2 = card2;
-  }
-}
-
-class Card {
-  constructor(card) {
-    card = parseInt(card.substring(4));
-    var suit = card / 13;
-    var num = card % 13;
-
-    if (suit < 1) this.suit = "c";
-    else if (suit < 2) this.suit = "d";
-    else if (suit < 3) this.suit = "h";
-    else this.suit = "s";
-
-    if (num == 0) this.num = "A";
-    else if (num == 10) this.num = "J";
-    else if (num == 11) this.num = "Q";
-    else if (num == 12) this.num = "K";
-    else this.num = (num + 1).toString();
-  }
-}

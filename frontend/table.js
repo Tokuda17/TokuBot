@@ -9,7 +9,9 @@ class Table {
   constructor(bb) {
     this.seats = [];
     this.bb = bb;
+    this.pot = 0;
   }
+
   getbb() {
     return this.bb;
   }
@@ -19,6 +21,12 @@ class Table {
 
   getSeats() {
     return this.seats;
+  }
+  getPot() {
+    return this.pot;
+  }
+  updatePot(pot) {
+    this.pot = pot;
   }
 
   /*
