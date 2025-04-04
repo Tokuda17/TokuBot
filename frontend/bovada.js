@@ -1,8 +1,13 @@
+import { Player } from "./player.js";
+import { Seat } from "./seat.js";
+import { Table } from "./table.js";
+
 const PLAYER_CONTAINER_HTML_TAG = ".f1phzx2y";
 const STAKES_HTML_TAG = ".mainContent";
 const STACK_HTML_TAG = "fxfcmpu";
 const BET_SIZE_HTML_TAG = "flytr4";
 const BUTTON_HTML_TAG = "fm87pe9";
+const FOLDED_CARD_TAG = '[data-qa="card-1"]';
 
 /*
 Extracts HTML element with the following htmlTag
@@ -41,7 +46,6 @@ Returns: small, big blind -> (double[2])
 function parseStakesString(title) {
   const stakes = title.split(" ")[0];
   const blinds = stakes.split("/");
-  console.log(blinds);
   return blinds;
 }
 
@@ -55,11 +59,16 @@ converts a container into a player Object
 Params: player container (HTML)
 Returns: player (Player Object)
 */
-function containerToPlayer(container) {
+function containerToPlayer(container, i) {
   const stack = getStack(container);
   const bet = getBet(container);
   const button = getButton(container);
-  console.log(`Bet = ${bet} Stack = ${stack} Button = ${button}`);
+  const in_hand = isInHand(container) && stack != null;
+  console.log(
+    `Idx = ${i} Bet = ${bet} Stack = ${stack} Button = ${button} in_hand = ${in_hand}`
+  );
+  const player = new Player(stack, bet, button, in_hand);
+  console.log(player);
 }
 
 /*
@@ -86,7 +95,7 @@ function getBet(container) {
   if (betSize) {
     return parseFloat(betSize.innerText.replace(/,/g, ""));
   } else {
-    return 0;
+    return null;
   }
 }
 
@@ -96,14 +105,26 @@ Params: player container (HTML)
 Returns: Is Seat the button (boolean)
 */
 function getButton(container) {
-  const button = container.getElementsByClassName(BUTTON_HTML_TAG);
+  const button = container.getElementsByClassName(BUTTON_HTML_TAG)[0];
   return button.style.visibility != "hidden";
+}
+
+/*
+Extracts if seat folded from hand
+Params: player container (HTML)
+Returns: if player folded from hand (boolean)
+*/
+function isInHand(container) {
+  const foldedCards = container.querySelector(FOLDED_CARD_TAG);
+  if (foldedCards) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 //functions that updates the board and potsize
 function getBoard() {}
-
-function isInHand() {}
 
 //function that initializes the seats and players in each seat.
 function initSeats() {
@@ -135,10 +156,6 @@ function activePlayer() {
   );
   if (isActive) return true;
   return false;
-}
-
-function getPlayers() {
-  return players;
 }
 
 function displayMove(move) {
@@ -179,7 +196,7 @@ async function main() {
   // addMoveNode();
   const playerContainers = getPlayerContainers();
   playerContainers.forEach((container, i) => {
-    const player = containerToPlayer(container);
+    const player = containerToPlayer(container, i);
   });
   getStakes();
   // displayMove();
