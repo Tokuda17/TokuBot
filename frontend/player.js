@@ -1,9 +1,9 @@
 export class Player {
-  constructor(pos, stack, bet_size = 0, in_hand = true) {
-    this.pos = pos;
+  constructor(stack, bet_size = 0, in_hand = true) {
     this.stack = stack;
     this.bet_size = bet_size;
     this.in_hand = in_hand;
+    this.pos = -1;
   }
   get_pos() {
     return this.pos;

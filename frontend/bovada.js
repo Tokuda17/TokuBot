@@ -1,153 +1,109 @@
-var board;
-const playersContainers = new Array(9);
-const players = new Array(9);
-var myPlayer;
-var game;
-
 const PLAYER_CONTAINER_HTML_TAG = ".f1phzx2y";
+const STAKES_HTML_TAG = ".mainContent";
+const STACK_HTML_TAG = "fxfcmpu";
+const BET_SIZE_HTML_TAG = "flytr4";
+const BUTTON_HTML_TAG = "fm87pe9";
+
+/*
+Extracts HTML element with the following htmlTag
+Params: htmlTag (str)
+Returns: list of elements with the corrosponding htmlTag (list[])
+*/
+function extractElementsFromIframes(htmlTag) {
+  const iframes = document.querySelectorAll("iframe");
+  for (const iframe of iframes) {
+    try {
+      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+      const elements = innerDoc.querySelectorAll(htmlTag);
+      if (elements.length > 0) {
+        return elements;
+      }
+    } catch (error) {
+      console.error(`extractElementsFromIframes() failed:`, error);
+    }
+  }
+  return null;
+}
+
+//Params: None
+//Returns: the small and big blind
+function getStakes() {
+  const stakesElements = extractElementsFromIframes(STAKES_HTML_TAG);
+  const blinds = parseStakesString(stakesElements[0].innerText);
+  return blinds;
+}
+
+/*
+Extracts the stakes from the title string
+Params: title -> (str)
+Returns: small, big blind -> (double[2])
+*/
+function parseStakesString(title) {
+  const stakes = title.split(" ")[0];
+  const blinds = stakes.split("/");
+  console.log(blinds);
+  return blinds;
+}
 
 //Returns a List of Player Containers where each container contains information about a specific player
 function getPlayerContainers() {
-  //Queries all iframes
-  const iframes = document.querySelectorAll("iframe");
+  return extractElementsFromIframes(PLAYER_CONTAINER_HTML_TAG);
+}
 
-  //Loops through iframes
-  iframes.forEach((iframe, index) => {
-    try {
-      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-      //Select all Elements with the player_container tag
-      const iframeElements = innerDoc.querySelectorAll(
-        PLAYER_CONTAINER_HTML_TAG
-      );
-      if (iframeElements.length > 0) {
-        return iframeElements;
-      }
-    } catch (error) {
-      console.error(`getPlayerContainers() Failed`, error);
-    }
-  });
+/*
+converts a container into a player Object
+Params: player container (HTML)
+Returns: player (Player Object)
+*/
+function containerToPlayer(container) {
+  const stack = getStack(container);
+  const bet = getBet(container);
+  const button = getButton(container);
+  console.log(`Bet = ${bet} Stack = ${stack} Button = ${button}`);
+}
+
+/*
+Extracts stack from container
+Params: player container (HTML)
+Returns: stack size (double)
+*/
+function getStack(container) {
+  const stack = container.getElementsByClassName(STACK_HTML_TAG)[0];
+  if (stack) {
+    return parseFloat(stack.innerText.replace(/,/g, ""));
+  } else {
+    return null;
+  }
+}
+
+/*
+Extracts bet size from container
+Params: player container (HTML)
+Returns: bet size (double)
+*/
+function getBet(container) {
+  const betSize = container.getElementsByClassName(BET_SIZE_HTML_TAG)[0];
+  if (betSize) {
+    return parseFloat(betSize.innerText.replace(/,/g, ""));
+  } else {
+    return 0;
+  }
+}
+
+/*
+Extracts if given seat has the button
+Params: player container (HTML)
+Returns: Is Seat the button (boolean)
+*/
+function getButton(container) {
+  const button = container.getElementsByClassName(BUTTON_HTML_TAG);
+  return button.style.visibility != "hidden";
 }
 
 //functions that updates the board and potsize
 function getBoard() {}
 
 function isInHand() {}
-
-function getStack(seat) {
-  var stack;
-  if (seat == myPlayer) {
-    stack = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone.fimvvv > div > span"
-    );
-  } else {
-    stack = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
-    );
-    if (!stack) {
-      stack = playersContainers[seat].querySelector(
-        "div > div:nth-child(2) > div:nth-child(2) > div.f1ay1w8p.rightPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
-      );
-    }
-    if (!stack) {
-      stack = playersContainers[seat].querySelector(
-        "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.leftPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
-      );
-    }
-    if (!stack) {
-      stack = playersContainers[seat].querySelector(
-        "div > div:nth-child(2) > div:nth-child(3) > div.f1ay1w8p.rightPlayer.notZone > div.f11rr7sf.isNotMyPlayer > span"
-      );
-    }
-  }
-  if (stack) return stack.innerText;
-}
-
-function getBet(seat) {
-  var bet;
-  bet = playersContainers[seat].querySelector(
-    "div > div:nth-child(2) > div.fhwmucx > div > div"
-  );
-  if (bet) return bet.innerText;
-  else return "0";
-}
-
-function getInHand(seat) {
-  var hand;
-  hand = playersContainers[seat].querySelector(
-    "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(2) > div > div > div > svg"
-  );
-  if (!hand) {
-    hand = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(4) > div > div > div > svg"
-    );
-  }
-  if (!hand) {
-    hand = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Right > div > div > div:nth-child(2) > div > div > div > svg"
-    );
-  }
-  if (!hand) {
-    hand = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Right > div > div > div:nth-child(4) > div > div > div > svg"
-    );
-  }
-
-  if (hand) hand = hand.dataset.qa;
-  return hand != "card-1";
-}
-
-function getCards(seat) {
-  var cards = [];
-
-  var card1 = playersContainers[seat].querySelector(
-    "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(2) > div > div > div.landscape.f1jmqybh.f169eucp.f45h > svg"
-  );
-  if (!card1) {
-    card1 = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(3) > div.f1itp13a.Left > div > div > div:nth-child(2) > div > div > div.landscape.f1jmqybh.f169eucp.f45h > svg"
-    );
-  }
-  var card2 = playersContainers[seat].querySelector(
-    "div > div:nth-child(2) > div:nth-child(2) > div.f1itp13a.Left > div > div > div:nth-child(4) > div > div > div.landscape.f1jmqybh.f1x351eq.f45h > svg"
-  );
-  if (!card2) {
-    card2 = playersContainers[seat].querySelector(
-      "div > div:nth-child(2) > div:nth-child(3) > div.f1itp13a.Left > div > div > div:nth-child(4) > div > div > div.landscape.f1jmqybh.f1x351eq.f45h > svg"
-    );
-  }
-
-  if (card1) cards.push(new Card(card1.dataset.qa));
-  if (card2) cards.push(new Card(card2.dataset.qa));
-
-  return cards;
-}
-
-function initPlayer(seat) {
-  var player;
-  var stack = getStack(seat);
-  var bet = getBet(seat);
-  var inHand = getInHand(seat);
-
-  if (seat != myPlayer) {
-    player = new Player(bet, stack, true, inHand, false);
-  } else if (inHand) {
-    var cards = getCards(myPlayer);
-    player = new MyPlayer(bet, stack, true, inHand, false, cards[0], cards[1]);
-  } else {
-    player = new MyPlayer(bet, stack, true, inHand, false);
-  }
-
-  return player;
-}
-
-function getButton(seat) {
-  var button;
-  button = playersContainers[seat].querySelector(
-    "div > div:nth-child(2) > div.fm87pe9.Desktop"
-  );
-
-  return button.style.visibility != "hidden";
-}
 
 //function that initializes the seats and players in each seat.
 function initSeats() {
@@ -221,7 +177,11 @@ async function main() {
   // init();
   // initSeats();
   // addMoveNode();
-  getPlayerData2();
+  const playerContainers = getPlayerContainers();
+  playerContainers.forEach((container, i) => {
+    const player = containerToPlayer(container);
+  });
+  getStakes();
   // displayMove();
 
   // if (activePlayer()) {

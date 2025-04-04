@@ -6,8 +6,9 @@ This class contains all the information regarding the table by storing a list of
 */
 
 class Table {
-  constructor(bb) {
+  constructor(sb, bb) {
     this.seats = [];
+    this.sb = sb;
     this.bb = bb;
     this.pot = 0;
   }
