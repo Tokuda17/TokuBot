@@ -189,7 +189,6 @@ function addMoveNode() {
 }
 
 //returns whether or not a given player is in the hand
-//"8ed4c725-2fa0-43d7-a49c-fb3b98a9589a"
 async function main() {
   // init();
   // initSeats();
